@@ -3,7 +3,6 @@ mod http;
 
 use cidr::IpCidr;
 use std::net::{IpAddr, SocketAddr};
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 struct ProxyContext {
     /// Bind address
@@ -20,15 +19,14 @@ struct ProxyContext {
 pub async fn run(bind: SocketAddr, concurrent: usize, cidr: Option<IpCidr>) -> crate::Result<()> {
     std::env::set_var("RUST_LOG", "debug");
 
-    tracing_subscriber::registry()
-        .with(
-            // do debug
-            tracing_subscriber::fmt::layer()
-                .with_target(false)
-                .with_span_events(tracing_subscriber::fmt::format::FmtSpan::CLOSE),
-        )
-        .with(tracing_subscriber::fmt::layer())
-        .init();
+    // tracing_subscriber::registry()
+    //     .with(
+    //         tracing_subscriber::fmt::layer()
+    //             .with_target(false)
+    //             .with_span_events(tracing_subscriber::fmt::format::FmtSpan::CLOSE),
+    //     )
+    //     .with(tracing_subscriber::fmt::layer())
+    //     .init();
 
     let fallback = Option::<IpAddr>::None;
 
